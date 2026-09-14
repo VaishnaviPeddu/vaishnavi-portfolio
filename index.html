@@ -256,6 +256,28 @@
   .job-more[open] summary::before{content:"– ";}
   .job-more[open] summary{margin-bottom:12px;}
 
+  .highlight-box{
+    margin-top:16px;
+    padding:12px 14px;
+    background:rgba(201,162,39,0.07);
+    border-left:2px solid var(--gold);
+    border-radius:0 6px 6px 0;
+  }
+  .highlight-label{
+    margin:0 0 4px;
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:0.02em;
+    color:var(--gold);
+  }
+  .highlight-text{
+    margin:0;
+    font-size:14px;
+    line-height:1.55;
+    color:var(--cream);
+  }
+  .highlight-text strong{color:var(--gold); font-weight:600;}
+
   /* ---------- EDU / CERTS ---------- */
   .two-col{
     display:grid;
@@ -631,10 +653,14 @@
         <h3 class="job-title">Software Engineer III</h3>
         <p class="job-company">Walmart Inc.</p>
         <ul>
-          <li>Designed, developed, and supported Java/J2EE architecture and secured RESTful microservices in Spring Boot using OAuth authentication.</li>
+          <li>Designed and implemented a custom rules engine for Walmart's associate badging system using GraphDB, Node.js, and React, with mobile apps built on React Native.</li>
           <li>Reduced cloud infrastructure cost by 70% for FY22 by configuring horizontal auto-scaling of Kubernetes pods during peak-traffic hours.</li>
-          <li>Designed and implemented a custom rules engine for a badging system using GraphDB, Node.js, and React, with mobile apps built on React Native.</li>
+          <li>Designed, developed, and supported Java/J2EE architecture and secured RESTful microservices in Spring Boot using OAuth authentication.</li>
         </ul>
+        <div class="highlight-box">
+          <p class="highlight-label">Career highlight</p>
+          <p class="highlight-text">Her work on the associate badging system earned Walmart's internal <strong>"Disruptor"</strong> award and was highlighted at the White House.</p>
+        </div>
         <details class="job-more">
           <summary>More detail</summary>
           <ul>
@@ -744,7 +770,7 @@
     <span class="ask-chip" data-q="What databases has she worked with?">Databases</span>
     <span class="ask-chip" data-q="How does she approach testing?">Testing approach</span>
     <span class="ask-chip" data-q="What's her leadership experience?">Leadership</span>
-    <span class="ask-chip" data-q="What's a career highlight?">A career highlight</span>
+    <span class="ask-chip" data-q="What's a career highlight?">Career highlight</span>
     <span class="ask-chip" data-q="How do I contact her?">Contact info</span>
   </div>
   <form class="ask-inputrow" id="askForm">
@@ -848,7 +874,7 @@
     },
     {
       kw: ["walmart","badging","badge"],
-      a: "At Walmart (2017–2023) she was a Software Engineer III. Highlights include cutting cloud infrastructure cost by 70% in FY22 via Kubernetes auto-scaling, and designing a custom rules engine for a badging system using GraphDB, Node.js, and React with a React Native mobile app."
+      a: "At Walmart (2017–2023) she was a Software Engineer III. Her standout work was a custom rules engine for the associate badging system (GraphDB, Node.js, React, React Native) — which earned Walmart's internal \"Disruptor\" award and was highlighted at the White House. She also cut cloud infrastructure cost by 70% in FY22 via Kubernetes auto-scaling."
     },
     {
       kw: ["tech","stack","technology","technologies","languages","tools","skills","java","react","angular","azure","cloud","kubernetes"],
@@ -875,8 +901,8 @@
       a: "Based in the Dallas–Fort Worth area, Texas."
     },
     {
-      kw: ["highlight","achievement","impact","proud","best","accomplishment"],
-      a: "A standout: reducing Walmart's cloud infrastructure cost by 70% in FY22 through Kubernetes auto-scaling — plus currently owning the full technical direction for four production applications at Fidelity as Module Lead."
+      kw: ["highlight","achievement","impact","proud","best","accomplishment","award","disruptor","white house"],
+      a: "Her career highlight: leading the custom rules engine behind Walmart's associate badging system, which earned Walmart's internal \"Disruptor\" award and was highlighted at the White House. She also cut Walmart's FY22 cloud costs by 70% via Kubernetes auto-scaling, and currently owns full technical direction for four production applications at Fidelity as Module Lead."
     },
     {
       kw: ["equity","espp","black-scholes","vesting","fintech","financial domain"],
