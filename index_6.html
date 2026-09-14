@@ -1,0 +1,1102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vaishnavi Peddu — Senior Software Engineer</title>
+<style>
+  :root{
+    --ink:#0d1521;
+    --panel:#111c2c;
+    --panel-2:#0a1220;
+    --line:#25344a;
+    --cream:#eae4d6;
+    --slate:#8ea0b8;
+    --slate-dim:#5c6d84;
+    --gold:#c9a227;
+    --gold-dim:#8a742a;
+    --serif: "Source Serif 4", "Iowan Old Style", Georgia, serif;
+    --sans: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+    --mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--cream);
+    font-family:var(--sans);
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  ::selection{background:var(--gold); color:var(--ink);}
+
+  .wrap{max-width:920px; margin:0 auto; padding:0 28px; position:relative; z-index:1;}
+
+  #bgCanvas{
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:0;
+    pointer-events:none;
+    display:block;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    padding:88px 0 64px;
+    border-bottom:1px solid var(--line);
+    overflow:hidden;
+  }
+  .hero-chart{
+    position:absolute;
+    right:-40px; top:0;
+    width:520px; max-width:60vw; height:100%;
+    opacity:0.5;
+    pointer-events:none;
+  }
+  .monogram{
+    width:52px; height:52px;
+    border:1px solid var(--gold-dim);
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--serif);
+    font-size:17px; letter-spacing:0.02em;
+    color:var(--gold);
+    margin-bottom:34px;
+  }
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:12.5px;
+    color:var(--slate);
+    letter-spacing:0.02em;
+    margin:0 0 16px;
+  }
+  h1{
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:clamp(38px, 6vw, 60px);
+    line-height:1.05;
+    margin:0 0 14px;
+    max-width:11ch;
+  }
+  .role{
+    font-family:var(--serif);
+    font-style:italic;
+    font-weight:400;
+    font-size:clamp(18px, 2.4vw, 23px);
+    color:var(--gold);
+    margin:0 0 26px;
+  }
+  .hero-desc{
+    max-width:52ch;
+    font-size:16px;
+    line-height:1.65;
+    color:var(--slate);
+    margin:0 0 30px;
+  }
+  .hero-meta{
+    display:flex;
+    gap:28px;
+    flex-wrap:wrap;
+    font-family:var(--mono);
+    font-size:13px;
+    color:var(--slate-dim);
+  }
+  .hero-meta a{ color:var(--slate); text-decoration:none; border-bottom:1px solid var(--line); padding-bottom:2px;}
+  .hero-meta a:hover{ color:var(--gold); border-color:var(--gold-dim);}
+
+  /* ---------- SECTION SCAFFOLD ---------- */
+  section{padding:56px 0;}
+  section + section{border-top:1px solid var(--line);}
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    margin-bottom:32px;
+  }
+  h2{
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:26px;
+    margin:0;
+  }
+  .section-num{
+    font-family:var(--mono);
+    font-size:12.5px;
+    color:var(--slate-dim);
+  }
+
+  /* ---------- SUMMARY ---------- */
+  .summary-lead{
+    font-family:var(--serif);
+    font-size:19px;
+    line-height:1.7;
+    max-width:64ch;
+    color:var(--cream);
+    margin:0 0 26px;
+  }
+  .summary-points{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:18px 40px;
+    list-style:none;
+    padding:0; margin:0;
+  }
+  .summary-points li{
+    font-size:14.5px;
+    line-height:1.55;
+    color:var(--slate);
+    padding-left:16px;
+    border-left:1px solid var(--line);
+  }
+  .summary-points strong{color:var(--cream); font-weight:600;}
+
+  /* ---------- SKILLS ---------- */
+  .skill-grid{
+    display:grid;
+    grid-template-columns:140px 1fr;
+    row-gap:18px;
+    column-gap:24px;
+  }
+  .skill-label{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--gold);
+    padding-top:3px;
+  }
+  .skill-tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px 10px;
+  }
+  .skill-tags span{
+    font-size:13.5px;
+    color:var(--slate);
+  }
+  .skill-tags span:not(:last-child)::after{
+    content:"·";
+    margin-left:10px;
+    color:var(--line);
+  }
+
+  /* ---------- EXPERIENCE ---------- */
+  .timeline{position:relative;}
+  .timeline::before{
+    content:"";
+    position:absolute;
+    left:5px; top:6px; bottom:6px;
+    width:1px;
+    background:var(--line);
+  }
+  .job{
+    position:relative;
+    padding-left:32px;
+    margin-bottom:44px;
+  }
+  .job:last-child{margin-bottom:0;}
+  .job::before{
+    content:"";
+    position:absolute;
+    left:0px; top:6px;
+    width:11px; height:11px;
+    border-radius:50%;
+    background:var(--ink);
+    border:2px solid var(--gold-dim);
+  }
+  .job-dates{
+    font-family:var(--mono);
+    font-size:12.5px;
+    color:var(--slate-dim);
+    margin-bottom:6px;
+  }
+  .job-title{
+    font-family:var(--serif);
+    font-size:19px;
+    font-weight:600;
+    margin:0 0 2px;
+  }
+  .job-company{
+    font-size:14px;
+    color:var(--gold);
+    margin:0 0 14px;
+  }
+  .job ul{
+    margin:0;
+    padding-left:18px;
+  }
+  .job li{
+    font-size:14.5px;
+    line-height:1.6;
+    color:var(--slate);
+    margin-bottom:8px;
+  }
+  .job li:last-child{margin-bottom:0;}
+  .job-env{
+    margin-top:14px;
+    font-family:var(--mono);
+    font-size:11.5px;
+    color:var(--slate-dim);
+    line-height:1.7;
+  }
+  .job-more{
+    margin-top:16px;
+  }
+  .job-more summary{
+    cursor:pointer;
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--slate-dim);
+    list-style:none;
+  }
+  .job-more summary::-webkit-details-marker{display:none;}
+  .job-more summary::before{content:"+ "; color:var(--gold-dim);}
+  .job-more[open] summary::before{content:"– ";}
+  .job-more[open] summary{margin-bottom:12px;}
+
+  /* ---------- EDU / CERTS ---------- */
+  .two-col{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:40px;
+  }
+  .edu-item{margin-bottom:22px;}
+  .edu-item:last-child{margin-bottom:0;}
+  .edu-degree{font-size:15px; font-weight:600; color:var(--cream); margin-bottom:2px;}
+  .edu-school{font-size:14px; color:var(--slate); margin-bottom:2px;}
+  .edu-meta{font-family:var(--mono); font-size:12px; color:var(--slate-dim);}
+  .cert-list{list-style:none; margin:0; padding:0;}
+  .cert-list li{
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    font-size:13.5px;
+    color:var(--slate);
+    padding:9px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .cert-list li:last-child{border-bottom:none;}
+  .cert-list .yr{font-family:var(--mono); color:var(--slate-dim); font-size:12px; white-space:nowrap;}
+
+  /* ---------- CONTACT / FOOTER ---------- */
+  footer{
+    padding:56px 0 72px;
+  }
+  .contact-line{
+    font-family:var(--serif);
+    font-size:24px;
+    line-height:1.5;
+    max-width:34ch;
+    margin:0 0 30px;
+  }
+  .contact-line a{
+    color:var(--gold);
+    text-decoration:none;
+    border-bottom:1px solid var(--gold-dim);
+  }
+  .contact-links{
+    display:flex; gap:24px; flex-wrap:wrap;
+    font-family:var(--mono); font-size:13px;
+  }
+  .contact-links a{
+    text-decoration:none; color:var(--slate);
+    border-bottom:1px solid var(--line);
+    padding-bottom:2px;
+  }
+  .contact-links a:hover{color:var(--gold); border-color:var(--gold-dim);}
+  .foot-note{
+    margin-top:48px;
+    font-family:var(--mono);
+    font-size:11.5px;
+    color:var(--slate-dim);
+  }
+
+  @media (max-width:640px){
+    .summary-points{grid-template-columns:1fr;}
+    .skill-grid{grid-template-columns:1fr;}
+    .skill-label{padding-top:0;}
+    .two-col{grid-template-columns:1fr;}
+    .hero-chart{opacity:0.28;}
+  }
+
+  @media (prefers-reduced-motion:no-preference){
+    .draw{
+      stroke-dasharray:1000;
+      stroke-dashoffset:1000;
+      animation:draw 1.8s ease-out forwards;
+    }
+  }
+  @keyframes draw{ to{stroke-dashoffset:0;} }
+
+  /* ---------- ASK WIDGET ---------- */
+  .ask-launcher{
+    position:fixed;
+    right:24px; bottom:24px;
+    z-index:40;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    background:var(--gold);
+    color:var(--ink);
+    border:none;
+    border-radius:999px;
+    padding:13px 20px 13px 16px;
+    font-family:var(--sans);
+    font-weight:600;
+    font-size:14px;
+    cursor:pointer;
+    box-shadow:0 10px 30px rgba(0,0,0,0.35);
+    transition:transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .ask-launcher:hover{transform:translateY(-2px); box-shadow:0 14px 34px rgba(0,0,0,0.45);}
+  .ask-launcher svg{width:17px; height:17px; flex:none;}
+  .ask-launcher .pulse{
+    width:7px; height:7px; border-radius:50%;
+    background:var(--ink);
+    animation:pulse 1.8s ease-in-out infinite;
+  }
+  @keyframes pulse{ 0%,100%{opacity:1;} 50%{opacity:0.25;} }
+
+  .ask-panel{
+    position:fixed;
+    right:24px; bottom:24px;
+    z-index:50;
+    width:380px;
+    max-width:calc(100vw - 32px);
+    height:520px;
+    max-height:calc(100vh - 48px);
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:16px;
+    display:none;
+    flex-direction:column;
+    overflow:hidden;
+    box-shadow:0 24px 60px rgba(0,0,0,0.55);
+  }
+  .ask-panel.open{display:flex;}
+
+  .ask-head{
+    padding:16px 18px;
+    border-bottom:1px solid var(--line);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background:var(--panel-2);
+  }
+  .ask-head-title{
+    display:flex; align-items:center; gap:10px;
+  }
+  .ask-avatar{
+    width:32px; height:32px; border-radius:50%;
+    border:1px solid var(--gold-dim);
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--serif); font-size:12px; color:var(--gold);
+  }
+  .ask-head-title div p{margin:0;}
+  .ask-head-title .name{font-size:13.5px; font-weight:600; color:var(--cream);}
+  .ask-head-title .status{
+    font-family:var(--mono); font-size:11px; color:var(--slate-dim);
+    display:flex; align-items:center; gap:5px;
+  }
+  .ask-head-title .status::before{
+    content:""; width:6px; height:6px; border-radius:50%; background:#4caf6f;
+  }
+  .ask-close{
+    background:none; border:none; color:var(--slate-dim);
+    font-size:20px; line-height:1; cursor:pointer; padding:4px;
+  }
+  .ask-close:hover{color:var(--cream);}
+
+  .ask-body{
+    flex:1;
+    overflow-y:auto;
+    padding:16px 16px 8px;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+  .ask-msg{
+    max-width:86%;
+    font-size:13.5px;
+    line-height:1.55;
+    padding:10px 13px;
+    border-radius:12px;
+  }
+  .ask-msg.bot{
+    align-self:flex-start;
+    background:var(--panel-2);
+    border:1px solid var(--line);
+    color:var(--cream);
+    border-bottom-left-radius:3px;
+  }
+  .ask-msg.user{
+    align-self:flex-end;
+    background:var(--gold);
+    color:var(--ink);
+    font-weight:500;
+    border-bottom-right-radius:3px;
+  }
+  .ask-typing{
+    align-self:flex-start;
+    display:flex; gap:4px;
+    padding:12px 14px;
+    background:var(--panel-2);
+    border:1px solid var(--line);
+    border-radius:12px;
+    border-bottom-left-radius:3px;
+  }
+  .ask-typing span{
+    width:5px; height:5px; border-radius:50%;
+    background:var(--slate-dim);
+    animation:typing 1.1s infinite;
+  }
+  .ask-typing span:nth-child(2){animation-delay:0.15s;}
+  .ask-typing span:nth-child(3){animation-delay:0.3s;}
+  @keyframes typing{ 0%,60%,100%{opacity:0.25; transform:translateY(0);} 30%{opacity:1; transform:translateY(-2px);} }
+
+  .ask-chips{
+    display:flex; flex-wrap:wrap; gap:7px;
+    padding:0 16px 12px;
+  }
+  .ask-chip{
+    font-family:var(--mono);
+    font-size:11.5px;
+    color:var(--slate);
+    background:var(--panel-2);
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:6px 11px;
+    cursor:pointer;
+    transition:border-color 0.15s, color 0.15s;
+  }
+  .ask-chip:hover{border-color:var(--gold-dim); color:var(--gold);}
+
+  .ask-inputrow{
+    display:flex;
+    gap:8px;
+    padding:12px;
+    border-top:1px solid var(--line);
+    background:var(--panel-2);
+  }
+  .ask-inputrow input{
+    flex:1;
+    background:var(--ink);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:10px 12px;
+    color:var(--cream);
+    font-family:var(--sans);
+    font-size:13.5px;
+    outline:none;
+  }
+  .ask-inputrow input:focus{border-color:var(--gold-dim);}
+  .ask-send{
+    background:var(--gold);
+    border:none;
+    border-radius:10px;
+    width:38px; height:38px;
+    flex:none;
+    cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .ask-send svg{width:16px; height:16px;}
+
+  @media (max-width:480px){
+    .ask-panel{ right:12px; left:12px; width:auto; bottom:12px; }
+    .ask-launcher{ right:16px; bottom:16px; }
+  }
+</style>
+</head>
+<body>
+<canvas id="bgCanvas" aria-hidden="true"></canvas>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <header class="hero">
+    <svg class="hero-chart" viewBox="0 0 400 420" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+      <!-- vesting-schedule style stepped growth line -->
+      <polyline class="draw" points="20,400 20,340 110,340 110,270 200,270 200,190 290,190 290,100 380,100 380,30"
+        fill="none" stroke="#c9a227" stroke-width="1.5" stroke-linejoin="round"/>
+      <g fill="#c9a227">
+        <circle cx="20" cy="340" r="3"/>
+        <circle cx="110" cy="270" r="3"/>
+        <circle cx="200" cy="190" r="3"/>
+        <circle cx="290" cy="100" r="3"/>
+        <circle cx="380" cy="30" r="3"/>
+      </g>
+      <line x1="20" y1="400" x2="380" y2="400" stroke="#25344a" stroke-width="1"/>
+    </svg>
+
+    <div class="monogram">VP</div>
+    <p class="eyebrow">Senior Software Engineer — 12+ years</p>
+    <h1>Vaishnavi Peddu</h1>
+    <p class="role">Senior software engineer building full-stack, distributed systems</p>
+    <p class="hero-desc">
+      I design and deliver backend services and APIs in Java and Spring Boot, with event-driven
+      architecture and cloud infrastructure end to end. Currently a Senior Software Engineer and
+      Module Lead at Fidelity Investments, owning technical direction across four production
+      applications.
+    </p>
+    <div class="hero-meta">
+      <span>Dallas–Fort Worth, TX</span>
+      <a href="mailto:reachvysh@gmail.com">reachvysh@gmail.com</a>
+      <a href="tel:+14144549064">(414) 454-9064</a>
+      <a href="http://www.linkedin.com/in/vaishnavi-peddu/" target="_blank" rel="noopener">linkedin.com/in/vaishnavi-peddu</a>
+    </div>
+  </header>
+
+  <!-- SUMMARY -->
+  <section id="summary">
+    <div class="section-head">
+      <h2>Summary</h2>
+      <span class="section-num">01</span>
+    </div>
+    <p class="summary-lead">
+      Twelve-plus years across the full stack: Java and Spring Boot services, REST APIs, and
+      event-driven architecture, with front-end and cloud experience layered on top. I've taken
+      that stack from on-prem legacy migrations to modern distributed systems, most recently as
+      a technical lead owning a portfolio of production applications.
+    </p>
+    <ul class="summary-points">
+      <li><strong>Backend systems</strong> — Java and Spring Boot services, REST/SOAP APIs, and microservices architecture across a decade-plus of production systems.</li>
+      <li><strong>Distributed systems</strong> — Architected event-driven services using Azure Functions, Service Bus, and Redis for scalability and resiliency.</li>
+      <li><strong>Delivery engineering</strong> — Built CI/CD pipelines with Git, Maven, and Jenkins, with test-driven development and automated performance testing.</li>
+      <li><strong>Reliability</strong> — Instrumented applications with Splunk, Grafana, and Dynatrace to monitor and guarantee production availability.</li>
+    </ul>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-head">
+      <h2>Technical skills</h2>
+      <span class="section-num">02</span>
+    </div>
+    <div class="skill-grid">
+      <div class="skill-label">Java &amp; backend</div>
+      <div class="skill-tags"><span>Java</span><span>J2EE</span><span>Spring Boot</span><span>Spring MVC</span><span>Spring Batch</span><span>JDBC</span><span>Microservices</span><span>REST</span><span>SOAP</span><span>GraphQL</span></div>
+
+      <div class="skill-label">Frontend</div>
+      <div class="skill-tags"><span>Angular</span><span>ReactJS</span><span>React Native</span><span>TypeScript</span><span>JavaScript</span><span>Redux</span><span>HTML5 / CSS</span></div>
+
+      <div class="skill-label">Cloud &amp; infra</div>
+      <div class="skill-tags"><span>Azure</span><span>WCNP</span><span>Docker</span><span>Kubernetes (AKS)</span><span>Azure Functions</span><span>Service Bus</span><span>Redis</span></div>
+
+      <div class="skill-label">Data</div>
+      <div class="skill-tags"><span>Azure SQL</span><span>MySQL</span><span>Oracle</span><span>MongoDB</span><span>Cosmos DB</span><span>GraphDB</span></div>
+
+      <div class="skill-label">Delivery &amp; QA</div>
+      <div class="skill-tags"><span>Jenkins</span><span>Maven</span><span>Git</span><span>JUnit</span><span>Mockito</span><span>Sonar</span><span>JMeter</span><span>Agile / Scrum</span></div>
+
+      <div class="skill-label">Observability</div>
+      <div class="skill-tags"><span>Datadog</span><span>Splunk</span><span>Grafana</span><span>Dynatrace</span></div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="section-head">
+      <h2>Experience</h2>
+      <span class="section-num">03</span>
+    </div>
+    <div class="timeline">
+
+      <div class="job">
+        <div class="job-dates">Mar 2023 — Present</div>
+        <h3 class="job-title">Senior Software Engineer, Module Lead</h3>
+        <p class="job-company">Fidelity Investments</p>
+        <ul>
+          <li>Promoted to Module Lead, providing technical leadership and end-to-end ownership for four enterprise applications, with recent modernization and migration to Java 21.</li>
+          <li>Architect event-driven, distributed systems using Azure Functions, Service Bus, Redis, and Azure SQL DB to improve scalability, resiliency, and operational efficiency.</li>
+          <li>Design and deliver applications using Java 8/11/17/21, Spring Boot, and REST APIs, with a front end in Angular/TypeScript, CI/CD via Jenkins/Maven, and TDD coverage through Mockito/JUnit.</li>
+        </ul>
+        <details class="job-more">
+          <summary>More detail</summary>
+          <ul>
+            <li>Own delivery of Employee Stock Purchase Plan (ESPP) processing, stock-based compensation workflows, and Black-Scholes valuation and liability accounting calculations.</li>
+            <li>Design and implement rules-engine-based (Drools) workflow automation for configurable business logic.</li>
+            <li>Monitor API performance via Datadog, Splunk, and Azure Application Insights; collaborate with DevOps on AKS deployment and scaling.</li>
+            <li>Implement feature flag frameworks and reusable component architectures enabling controlled rollouts across multiple applications; drive technical design discussions, code reviews, and architecture decisions.</li>
+            <li>Partner with product managers, business stakeholders, QA, and engineering to translate complex business requirements into scalable technology solutions.</li>
+            <li>Mentor engineers and contribute to code review standards, documentation, and engineering best practices across the delivery lifecycle.</li>
+          </ul>
+        </details>
+        <p class="job-env">Java · Spring Boot · Angular · TypeScript · Microservices · Azure Functions · Azure SQL DB · Service Bus · Redis · Drools · Docker · Kubernetes · Jenkins</p>
+      </div>
+
+      <div class="job">
+        <div class="job-dates">Jan 2017 — Mar 2023</div>
+        <h3 class="job-title">Software Engineer III</h3>
+        <p class="job-company">Walmart Inc.</p>
+        <ul>
+          <li>Designed, developed, and supported Java/J2EE architecture and secured RESTful microservices in Spring Boot using OAuth authentication.</li>
+          <li>Reduced cloud infrastructure cost by 70% for FY22 by configuring horizontal auto-scaling of Kubernetes pods during peak-traffic hours.</li>
+          <li>Designed and implemented a custom rules engine for a badging system using GraphDB, Node.js, and React, with mobile apps built on React Native.</li>
+        </ul>
+        <details class="job-more">
+          <summary>More detail</summary>
+          <ul>
+            <li>Implemented state management with Redux (Sagas) and built RESTful web services and middleware with Express.js.</li>
+            <li>Developed services using Azure Functions, Azure SQL, Redis cache, Service Bus, Cosmos DB, Azure Storage, and Azure API Management.</li>
+            <li>Created Dynatrace/Splunk dashboards to monitor API performance, with custom alerts for SLA breaches.</li>
+            <li>Set up Jest, Jasmine, and Karma for JavaScript unit and functional testing with mocking frameworks.</li>
+            <li>Built proofs of concept for a Learning Integration System using Apache Kafka, Azure Functions, and a Learning Record Store (LRS), integrating corporate LMS platforms with Badgr for credentialing.</li>
+            <li>Mentored junior developers on engineering best practices and led code reviews.</li>
+          </ul>
+        </details>
+        <p class="job-env">Java · Spring · GraphQL · Node.js · React · React Native · Kafka · Azure · WCNP · Kubernetes</p>
+      </div>
+
+      <div class="job">
+        <div class="job-dates">Feb 2016 — Dec 2016</div>
+        <h3 class="job-title">Software Engineer</h3>
+        <p class="job-company">Avnet Inc.</p>
+        <ul>
+          <li>Built a Procure2Pay monitoring web application using Spring MVC and AngularJS, deployed on JBoss.</li>
+          <li>Developed a Spring Batch process to parse EDI files and update transaction data on Oracle via JPA, and implemented SOAP web services to extract data from IBM Sterling.</li>
+        </ul>
+        <p class="job-env">Java · Spring MVC / Batch · AngularJS · SOAP · Oracle · JPA · Jenkins</p>
+      </div>
+
+      <div class="job">
+        <div class="job-dates">Mar 2013 — Aug 2014</div>
+        <h3 class="job-title">Assistant System Engineer</h3>
+        <p class="job-company">Tata Consultancy Services</p>
+        <ul>
+          <li>Developed applications on Spring MVC with Hibernate/Spring ORM against Oracle 11g, applying core J2EE design patterns for clean layer separation.</li>
+        </ul>
+        <p class="job-env">Java · Spring MVC · Hibernate · Oracle · PL/SQL</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- EDUCATION & CERTS -->
+  <section id="education">
+    <div class="section-head">
+      <h2>Education &amp; certifications</h2>
+      <span class="section-num">04</span>
+    </div>
+    <div class="two-col">
+      <div>
+        <div class="edu-item">
+          <div class="edu-degree">M.S., Information Systems</div>
+          <div class="edu-school">Central Michigan University</div>
+          <div class="edu-meta">GPA 3.9/4.0 — Dec 2015</div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-degree">B.Tech, Electrical &amp; Electronics Engineering</div>
+          <div class="edu-school">Jawaharlal Technological University, Kakinada</div>
+          <div class="edu-meta">GPA 3.8/4.0 — Mar 2012</div>
+        </div>
+      </div>
+      <ul class="cert-list">
+        <li><span>Microsoft Certified: Azure Fundamentals</span><span class="yr">2020</span></li>
+        <li><span>Dale Carnegie Leadership — Breakthrough Award</span><span class="yr">2018</span></li>
+        <li><span>Oracle Database 11g: SQL Fundamentals I</span><span class="yr">2016</span></li>
+        <li><span>Beta Gamma Sigma Member (Business Honor)</span><span class="yr">2015</span></li>
+        <li><span>ERPSim Invitational Competition — 3rd Place</span><span class="yr">2015</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <footer id="contact">
+    <p class="contact-line">
+      Open to conversations about senior and staff engineering roles —
+      <a href="mailto:reachvysh@gmail.com">reachvysh@gmail.com</a>
+    </p>
+    <div class="contact-links">
+      <a href="mailto:reachvysh@gmail.com">Email</a>
+      <a href="tel:+14144549064">(414) 454-9064</a>
+      <a href="http://www.linkedin.com/in/vaishnavi-peddu/" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+    <p class="foot-note">Dallas–Fort Worth, TX</p>
+  </footer>
+
+</div>
+
+<!-- ASK WIDGET -->
+<button class="ask-launcher" id="askLauncher" aria-haspopup="dialog" aria-expanded="false">
+  <span class="pulse"></span>
+  Ask about Vaishnavi
+</button>
+
+<div class="ask-panel" id="askPanel" role="dialog" aria-label="Ask about Vaishnavi">
+  <div class="ask-head">
+    <div class="ask-head-title">
+      <div class="ask-avatar">VP</div>
+      <div>
+        <p class="name">Ask about Vaishnavi</p>
+        <p class="status">Answers instantly</p>
+      </div>
+    </div>
+    <button class="ask-close" id="askClose" aria-label="Close">×</button>
+  </div>
+  <div class="ask-body" id="askBody"></div>
+  <div class="ask-chips" id="askChips">
+    <span class="ask-chip" data-q="How many years of experience with Java, React, Azure, and AEM?">Years by technology</span>
+    <span class="ask-chip" data-q="What does she do at Fidelity?">Current role</span>
+    <span class="ask-chip" data-q="What's her tech stack?">Tech stack</span>
+    <span class="ask-chip" data-q="Has she worked with Kubernetes and Docker?">Kubernetes/Docker</span>
+    <span class="ask-chip" data-q="What databases has she worked with?">Databases</span>
+    <span class="ask-chip" data-q="How does she approach testing?">Testing approach</span>
+    <span class="ask-chip" data-q="What's her leadership experience?">Leadership</span>
+    <span class="ask-chip" data-q="What's a career highlight?">A career highlight</span>
+    <span class="ask-chip" data-q="How do I contact her?">Contact info</span>
+  </div>
+  <form class="ask-inputrow" id="askForm">
+    <input id="askInput" type="text" placeholder="Ask a question…" autocomplete="off" />
+    <button class="ask-send" type="submit" aria-label="Send">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4 12L20 4L13 20L11 13L4 12Z" fill="#0d1521"/>
+      </svg>
+    </button>
+  </form>
+</div>
+
+<script>
+// ---- ambient background: faint drifting node network ----
+(function(){
+  var canvas = document.getElementById('bgCanvas');
+  var ctx = canvas.getContext('2d');
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var W, H, points = [];
+  var MAX_DIST = 130;
+
+  function sizeCanvas(){
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+
+  function makePoints(){
+    var density = (W * H) / 16000;
+    var count = Math.max(28, Math.min(70, Math.round(density)));
+    points = [];
+    for(var i=0;i<count;i++){
+      points.push({
+        x: Math.random()*W,
+        y: Math.random()*H,
+        vx: (Math.random()-0.5) * 0.12,
+        vy: (Math.random()-0.5) * 0.12,
+        gold: Math.random() < 0.35
+      });
+    }
+  }
+
+  function step(){
+    ctx.clearRect(0,0,W,H);
+    for(var i=0;i<points.length;i++){
+      var p = points[i];
+      if(!reduced){
+        p.x += p.vx; p.y += p.vy;
+        if(p.x < -20) p.x = W+20; if(p.x > W+20) p.x = -20;
+        if(p.y < -20) p.y = H+20; if(p.y > H+20) p.y = -20;
+      }
+    }
+    for(var i=0;i<points.length;i++){
+      for(var j=i+1;j<points.length;j++){
+        var a = points[i], b = points[j];
+        var dx = a.x-b.x, dy = a.y-b.y;
+        var dist = Math.sqrt(dx*dx+dy*dy);
+        if(dist < MAX_DIST){
+          var alpha = (1 - dist/MAX_DIST) * 0.16;
+          ctx.strokeStyle = 'rgba(142,160,184,' + alpha + ')';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(a.x,a.y);
+          ctx.lineTo(b.x,b.y);
+          ctx.stroke();
+        }
+      }
+    }
+    for(var i=0;i<points.length;i++){
+      var p = points[i];
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.gold ? 1.6 : 1.1, 0, Math.PI*2);
+      ctx.fillStyle = p.gold ? 'rgba(201,162,39,0.55)' : 'rgba(142,160,184,0.4)';
+      ctx.fill();
+    }
+    if(!reduced) requestAnimationFrame(step);
+  }
+
+  sizeCanvas();
+  makePoints();
+  step();
+
+  var resizeTimer;
+  window.addEventListener('resize', function(){
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function(){
+      sizeCanvas();
+      makePoints();
+      if(reduced) step();
+    }, 150);
+  });
+})();
+</script>
+
+<script>
+(function(){
+  // ---- knowledge base, sourced from resume ----
+  var KB = [
+    {
+      kw: ["fidelity","current","now","today","module lead","currently"],
+      a: "At Fidelity Investments, she's a Senior Software Engineer and Module Lead, owning four enterprise applications end-to-end. Her focus is backend architecture: event-driven distributed systems on Azure Functions, Service Bus, and Redis, built with Java 21 and Spring Boot, with Angular on the front end."
+    },
+    {
+      kw: ["walmart","badging","badge"],
+      a: "At Walmart (2017–2023) she was a Software Engineer III. Highlights include cutting cloud infrastructure cost by 70% in FY22 via Kubernetes auto-scaling, and designing a custom rules engine for a badging system using GraphDB, Node.js, and React with a React Native mobile app."
+    },
+    {
+      kw: ["tech","stack","technology","technologies","languages","tools","skills","java","react","angular","azure","cloud","kubernetes"],
+      a: "Core stack: Java (8/11/17/21), Spring Boot, Angular, TypeScript, and REST APIs on the backend/frontend; Azure, WCNP, Docker, and Kubernetes for cloud and infra; Azure SQL, MongoDB, and Cosmos DB for data; plus React, React Native, and Node.js from earlier roles. CI/CD via Jenkins and Maven, observability via Datadog, Splunk, Grafana, and Dynatrace."
+    },
+    {
+      kw: ["experience","years","how long","background","summary"],
+      a: "12+ years as a full-stack and cloud engineer, spanning TCS, Avnet, Walmart, and now Fidelity Investments — with increasing scope from individual contributor to Module Lead."
+    },
+    {
+      kw: ["education","degree","school","university","study","studied"],
+      a: "M.S. in Information Systems from Central Michigan University (GPA 3.9/4.0, 2015), and a B.Tech in Electrical & Electronics Engineering from JNTU Kakinada, India (GPA 3.8/4.0, 2012)."
+    },
+    {
+      kw: ["certification","certified","certificate","certs"],
+      a: "Microsoft Certified: Azure Fundamentals (2020), Oracle Database 11g SQL Fundamentals I (2016), plus a Dale Carnegie Leadership Breakthrough Award (2018) and Beta Gamma Sigma membership (2015)."
+    },
+    {
+      kw: ["contact","email","phone","reach","linkedin","hire","number"],
+      a: "Best reached at reachvysh@gmail.com or (414) 454-9064. Her LinkedIn is linkedin.com/in/vaishnavi-peddu."
+    },
+    {
+      kw: ["location","based","live","dallas","texas","where"],
+      a: "Based in the Dallas–Fort Worth area, Texas."
+    },
+    {
+      kw: ["highlight","achievement","impact","proud","best","accomplishment"],
+      a: "A standout: reducing Walmart's cloud infrastructure cost by 70% in FY22 through Kubernetes auto-scaling — plus currently owning the full technical direction for four production applications at Fidelity as Module Lead."
+    },
+    {
+      kw: ["equity","espp","black-scholes","vesting","fintech","financial domain"],
+      a: "One slice of her Fidelity work touches ESPP (Employee Stock Purchase Plan) processing and Black-Scholes valuation, but that's domain context, not her specialization — the underlying work is distributed systems, event-driven architecture, and full-stack engineering."
+    },
+    {
+      kw: ["open","role","opportunity","looking","job","available"],
+      a: "Yes — open to conversations about senior and staff engineering roles. Reach out at reachvysh@gmail.com."
+    },
+    {
+      kw: ["mentor","leadership","lead","team","manage"],
+      a: "As Module Lead at Fidelity she mentors engineers, drives code review standards, and leads technical design and architecture decisions across multiple application teams. She also mentored junior developers at Walmart."
+    },
+    {
+      kw: ["tcs","tata consultancy"],
+      a: "Her career started at Tata Consultancy Services (Mar 2013 – Aug 2014) as an Assistant System Engineer, building applications on Spring MVC with Hibernate/Spring ORM against Oracle 11g, and applying core J2EE design patterns (Factory, Singleton, DAO, DTO) for clean layer separation."
+    },
+    {
+      kw: ["avnet","procure2pay","procure to pay","jboss"],
+      a: "At Avnet Inc. (Feb – Dec 2016) she built a Procure2Pay monitoring web app using Spring MVC and AngularJS, deployed on JBoss; developed a Spring Batch process to parse EDI files into an Oracle database via JPA; and implemented SOAP web services against IBM Sterling."
+    },
+    {
+      kw: ["kubernetes","docker","container","aks","wcnp","orchestrat"],
+      a: "Yes — she's deployed and auto-scaled applications on Kubernetes (including Azure Kubernetes Service) and WCNP, and containerized legacy on-prem VM workloads with Docker as part of cloud migrations at Walmart and Fidelity. At Walmart, Kubernetes auto-scaling cut FY22 cloud costs by 70%."
+    },
+    {
+      kw: ["database","sql","nosql","mongodb","mongo","cosmos","oracle","mysql","mariadb","graphdb","postgres"],
+      a: "She's worked across relational and NoSQL databases: Azure SQL, Oracle, MySQL, MariaDB, MongoDB, Cosmos DB, and GraphDB — including designing a custom rules engine on GraphDB at Walmart."
+    },
+    {
+      kw: ["testing","test","junit","mockito","tdd","jmeter","qa","quality","unit test","automat"],
+      a: "She practices test-driven development, using JUnit and Mockito for backend testing, Jest/Jasmine/Karma for JavaScript, and JMeter for performance and automated testing."
+    },
+    {
+      kw: ["kafka","messaging","event-driven","event driven","service bus","queue"],
+      a: "She builds event-driven systems using Azure Service Bus and Apache Kafka — including a proof-of-concept Learning Integration System at Walmart combining Kafka, Azure Functions, and a Learning Record Store."
+    },
+    {
+      kw: ["graphql"],
+      a: "Yes — she's both consumed and built GraphQL APIs for microservices, at Walmart."
+    },
+    {
+      kw: ["react native","mobile","hybrid app","cordova","play store","android","ios app"],
+      a: "She's built and shipped hybrid mobile apps using React Native and Apache Cordova to the Google Play Store and enterprise devices, at Walmart."
+    },
+    {
+      kw: ["devops","ci/cd","cicd","jenkins","git","maven","sonar","pipeline","nexus","build engineering"],
+      a: "Her CI/CD toolchain spans Git, Maven, Jenkins, Docker, and Sonar for code quality — she's built and maintained delivery pipelines end-to-end at every company she's worked for."
+    },
+    {
+      kw: ["observability","monitoring","datadog","splunk","grafana","dynatrace","alert","sla"],
+      a: "She instruments production systems with Datadog, Splunk, Grafana, and Dynatrace — including setting up custom alerting against SLA thresholds and building performance dashboards at Walmart and Fidelity."
+    },
+    {
+      kw: ["why hire","strength","stand out","different","unique","differentiat"],
+      a: "Twelve-plus years of genuine full-stack range — backend, frontend, cloud, and data — paired with recent technical leadership as Module Lead: mentoring engineers and owning architecture decisions across a portfolio of production applications."
+    },
+    {
+      kw: ["resume","cv","download"],
+      a: "There's no downloadable file linked here yet — the fastest way to get her full resume is to email reachvysh@gmail.com."
+    },
+    {
+      kw: ["early career","first job","before walmart","career start"],
+      a: "Her career started at Tata Consultancy Services (2013–2014), then Avnet Inc. (2016), before six years at Walmart and now Fidelity Investments — ask about TCS or Avnet specifically for details."
+    },
+    {
+      kw: ["hi","hello","hey","yo "],
+      a: "Hi! Ask me anything about Vaishnavi's experience, skills, or background."
+    },
+    {
+      kw: ["thanks","thank you","cheers"],
+      a: "You're welcome — anything else you'd like to know?"
+    }
+  ];
+
+  var FALLBACK = "I don't have a scripted answer for that one — the best move is to ask her directly at reachvysh@gmail.com. Try one of the suggested questions below, or ask about her experience, stack, or education.";
+  var GREETING = "Hi! I can answer quick questions about Vaishnavi's experience, skills, and background — try one of the prompts below, or ask how many years she has with a specific technology like Java, React, Azure, or AEM.";
+
+  // ---- dynamic years-of-experience engine, computed from actual role dates ----
+  function monthsBetween(startStr, endStr){
+    var start = new Date(startStr);
+    var end = endStr ? new Date(endStr) : new Date();
+    return (end.getFullYear()-start.getFullYear())*12 + (end.getMonth()-start.getMonth());
+  }
+  function yearsFor(periods){
+    var m = 0;
+    periods.forEach(function(p){ m += monthsBetween(p[0], p[1]); });
+    return m/12;
+  }
+  function fmt(y){
+    var r = Math.round(y*2)/2;
+    return (r % 1 === 0 ? r.toFixed(0) : r.toFixed(1));
+  }
+
+  var TCS=['2013-03-01','2014-08-31'], AVNET=['2016-02-01','2016-12-31'],
+      WMT=['2017-01-01','2023-03-01'], FID=['2023-03-01', null];
+
+  var TECH = {
+    java: function(){ return "Java — about " + fmt(yearsFor([TCS,AVNET,WMT,FID])) + "+ years, used continuously from her first role at TCS through today at Fidelity."; },
+    spring: function(){ return "Spring (MVC, Boot, Batch) — about " + fmt(yearsFor([TCS,AVNET,WMT,FID])) + "+ years, spanning every role she's held."; },
+    react: function(){ return "React/ReactJS — about " + fmt(yearsFor([WMT])) + " years, at Walmart (2017–2023). Not used in her current Fidelity role."; },
+    reactnative: function(){ return "React Native — about " + fmt(yearsFor([WMT])) + " years, at Walmart, building hybrid mobile apps."; },
+    angular: function(){ return "Angular — about " + fmt(yearsFor([FID])) + "+ years currently at Fidelity (2023–present). She also used AngularJS earlier at Avnet in 2016 (about " + fmt(yearsFor([AVNET])) + " year)."; },
+    typescript: function(){ return "TypeScript — about " + fmt(yearsFor([FID])) + "+ years, at Fidelity (2023–present)."; },
+    azure: function(){ return "Azure — about " + fmt(yearsFor([WMT,FID])) + "+ years, continuously since 2017 across Walmart and Fidelity."; },
+    kubernetes: function(){ return "Kubernetes — about " + fmt(yearsFor([WMT,FID])) + "+ years, continuously since 2017 (WCNP at Walmart, AKS at Fidelity)."; },
+    docker: function(){ return "Docker — about " + fmt(yearsFor([WMT,FID])) + "+ years, since 2017 across Walmart and Fidelity."; },
+    nodejs: function(){ return "Node.js — about " + fmt(yearsFor([WMT])) + " years, at Walmart."; },
+    graphql: function(){ return "GraphQL — about " + fmt(yearsFor([WMT])) + " years, at Walmart."; },
+    kafka: function(){ return "Kafka — about " + fmt(yearsFor([WMT])) + " years, at Walmart."; },
+    aem: function(){ return "Adobe AEM — roughly " + fmt(yearsFor([WMT])) + " years, primarily during her time at Walmart."; },
+    oracle: function(){ return "Oracle — about " + fmt(yearsFor([TCS,AVNET])) + " years, earlier in her career at TCS and Avnet."; }
+  };
+
+  var TECH_PATTERNS = [
+    {re:/react native/, key:'reactnative'},
+    {re:/react(?!\s*native)(js)?/, key:'react'},
+    {re:/angular(js)?/, key:'angular'},
+    {re:/typescript/, key:'typescript'},
+    {re:/kubernetes|k8s/, key:'kubernetes'},
+    {re:/docker/, key:'docker'},
+    {re:/azure/, key:'azure'},
+    {re:/node\.?js|\bnode\b/, key:'nodejs'},
+    {re:/graphql/, key:'graphql'},
+    {re:/kafka/, key:'kafka'},
+    {re:/\baem\b|adobe (experience manager|aem)/, key:'aem'},
+    {re:/oracle/, key:'oracle'},
+    {re:/spring/, key:'spring'},
+    {re:/\bjava\b/, key:'java'}
+  ];
+  var YEARS_CUE = /year|how long|experience|worked with|know\s/;
+
+  function techExperienceAnswer(text){
+    var matched = [];
+    TECH_PATTERNS.forEach(function(p){
+      if(p.re.test(text) && matched.indexOf(p.key) === -1) matched.push(p.key);
+    });
+    if(matched.length === 0) return null;
+    // only take over if the question is actually asking about duration/experience,
+    // OR more than one technology was named (comparison-style question)
+    if(!YEARS_CUE.test(text) && matched.length < 2) return null;
+    return matched.map(function(k){ return TECH[k](); }).join(' ');
+  }
+
+
+  function bestAnswer(q){
+    var text = q.toLowerCase();
+    var techAnswer = techExperienceAnswer(text);
+    if(techAnswer) return techAnswer;
+    var best = null, bestScore = 0;
+    KB.forEach(function(entry){
+      var score = 0;
+      entry.kw.forEach(function(k){ if(text.indexOf(k) !== -1) score++; });
+      if(score > bestScore){ bestScore = score; best = entry; }
+    });
+    return bestScore > 0 ? best.a : FALLBACK;
+  }
+
+  var launcher = document.getElementById('askLauncher');
+  var panel = document.getElementById('askPanel');
+  var closeBtn = document.getElementById('askClose');
+  var body = document.getElementById('askBody');
+  var form = document.getElementById('askForm');
+  var input = document.getElementById('askInput');
+  var chips = document.getElementById('askChips');
+  var opened = false;
+
+  function addMsg(text, who){
+    var el = document.createElement('div');
+    el.className = 'ask-msg ' + who;
+    el.textContent = text;
+    body.appendChild(el);
+    body.scrollTop = body.scrollHeight;
+  }
+
+  function respond(q){
+    addMsg(q, 'user');
+    var typing = document.createElement('div');
+    typing.className = 'ask-typing';
+    typing.innerHTML = '<span></span><span></span><span></span>';
+    body.appendChild(typing);
+    body.scrollTop = body.scrollHeight;
+    var delay = 500 + Math.random()*500;
+    setTimeout(function(){
+      typing.remove();
+      addMsg(bestAnswer(q), 'bot');
+    }, delay);
+  }
+
+  launcher.addEventListener('click', function(){
+    panel.classList.add('open');
+    launcher.style.display = 'none';
+    launcher.setAttribute('aria-expanded','true');
+    if(!opened){
+      opened = true;
+      addMsg(GREETING, 'bot');
+    }
+    input.focus();
+  });
+
+  closeBtn.addEventListener('click', function(){
+    panel.classList.remove('open');
+    launcher.style.display = 'flex';
+    launcher.setAttribute('aria-expanded','false');
+  });
+
+  chips.addEventListener('click', function(e){
+    var q = e.target.getAttribute('data-q');
+    if(q) respond(q);
+  });
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var q = input.value.trim();
+    if(!q) return;
+    input.value = '';
+    respond(q);
+  });
+})();
+</script>
+
+</body>
+</html>
