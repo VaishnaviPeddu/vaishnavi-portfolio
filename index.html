@@ -31,7 +31,17 @@
   a{color:inherit;}
   ::selection{background:var(--gold); color:var(--ink);}
 
-  .wrap{max-width:920px; margin:0 auto; padding:0 28px;}
+  .wrap{max-width:920px; margin:0 auto; padding:0 28px; position:relative; z-index:1;}
+
+  #bgCanvas{
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:0;
+    pointer-events:none;
+    display:block;
+  }
 
   /* ---------- HERO ---------- */
   .hero{
@@ -500,6 +510,7 @@
 </style>
 </head>
 <body>
+<canvas id="bgCanvas" aria-hidden="true"></canvas>
 
 <div class="wrap">
 
@@ -726,10 +737,15 @@
   </div>
   <div class="ask-body" id="askBody"></div>
   <div class="ask-chips" id="askChips">
-    <span class="ask-chip" data-q="What does she do at Fidelity?">What does she do at Fidelity?</span>
-    <span class="ask-chip" data-q="What's her tech stack?">Tech stack?</span>
-    <span class="ask-chip" data-q="How do I contact her?">Contact info</span>
+    <span class="ask-chip" data-q="How many years of experience with Java, React, Azure, and AEM?">Years by technology</span>
+    <span class="ask-chip" data-q="What does she do at Fidelity?">Current role</span>
+    <span class="ask-chip" data-q="What's her tech stack?">Tech stack</span>
+    <span class="ask-chip" data-q="Has she worked with Kubernetes and Docker?">Kubernetes/Docker</span>
+    <span class="ask-chip" data-q="What databases has she worked with?">Databases</span>
+    <span class="ask-chip" data-q="How does she approach testing?">Testing approach</span>
+    <span class="ask-chip" data-q="What's her leadership experience?">Leadership</span>
     <span class="ask-chip" data-q="What's a career highlight?">A career highlight</span>
+    <span class="ask-chip" data-q="How do I contact her?">Contact info</span>
   </div>
   <form class="ask-inputrow" id="askForm">
     <input id="askInput" type="text" placeholder="Ask a question…" autocomplete="off" />
@@ -740,6 +756,87 @@
     </button>
   </form>
 </div>
+
+<script>
+// ---- ambient background: faint drifting node network ----
+(function(){
+  var canvas = document.getElementById('bgCanvas');
+  var ctx = canvas.getContext('2d');
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var W, H, points = [];
+  var MAX_DIST = 130;
+
+  function sizeCanvas(){
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+
+  function makePoints(){
+    var density = (W * H) / 16000;
+    var count = Math.max(28, Math.min(70, Math.round(density)));
+    points = [];
+    for(var i=0;i<count;i++){
+      points.push({
+        x: Math.random()*W,
+        y: Math.random()*H,
+        vx: (Math.random()-0.5) * 0.12,
+        vy: (Math.random()-0.5) * 0.12,
+        gold: Math.random() < 0.35
+      });
+    }
+  }
+
+  function step(){
+    ctx.clearRect(0,0,W,H);
+    for(var i=0;i<points.length;i++){
+      var p = points[i];
+      if(!reduced){
+        p.x += p.vx; p.y += p.vy;
+        if(p.x < -20) p.x = W+20; if(p.x > W+20) p.x = -20;
+        if(p.y < -20) p.y = H+20; if(p.y > H+20) p.y = -20;
+      }
+    }
+    for(var i=0;i<points.length;i++){
+      for(var j=i+1;j<points.length;j++){
+        var a = points[i], b = points[j];
+        var dx = a.x-b.x, dy = a.y-b.y;
+        var dist = Math.sqrt(dx*dx+dy*dy);
+        if(dist < MAX_DIST){
+          var alpha = (1 - dist/MAX_DIST) * 0.16;
+          ctx.strokeStyle = 'rgba(142,160,184,' + alpha + ')';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(a.x,a.y);
+          ctx.lineTo(b.x,b.y);
+          ctx.stroke();
+        }
+      }
+    }
+    for(var i=0;i<points.length;i++){
+      var p = points[i];
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.gold ? 1.6 : 1.1, 0, Math.PI*2);
+      ctx.fillStyle = p.gold ? 'rgba(201,162,39,0.55)' : 'rgba(142,160,184,0.4)';
+      ctx.fill();
+    }
+    if(!reduced) requestAnimationFrame(step);
+  }
+
+  sizeCanvas();
+  makePoints();
+  step();
+
+  var resizeTimer;
+  window.addEventListener('resize', function(){
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function(){
+      sizeCanvas();
+      makePoints();
+      if(reduced) step();
+    }, 150);
+  });
+})();
+</script>
 
 <script>
 (function(){
@@ -794,16 +891,141 @@
       a: "As Module Lead at Fidelity she mentors engineers, drives code review standards, and leads technical design and architecture decisions across multiple application teams. She also mentored junior developers at Walmart."
     },
     {
-      kw: ["tcs","tata","avnet","early career","first job"],
-      a: "Her career started at Tata Consultancy Services (2013–2014) on Spring MVC/Hibernate applications, then Avnet Inc. (2016) building a Procure2Pay monitoring app, before Walmart and Fidelity."
+      kw: ["tcs","tata consultancy"],
+      a: "Her career started at Tata Consultancy Services (Mar 2013 – Aug 2014) as an Assistant System Engineer, building applications on Spring MVC with Hibernate/Spring ORM against Oracle 11g, and applying core J2EE design patterns (Factory, Singleton, DAO, DTO) for clean layer separation."
+    },
+    {
+      kw: ["avnet","procure2pay","procure to pay","jboss"],
+      a: "At Avnet Inc. (Feb – Dec 2016) she built a Procure2Pay monitoring web app using Spring MVC and AngularJS, deployed on JBoss; developed a Spring Batch process to parse EDI files into an Oracle database via JPA; and implemented SOAP web services against IBM Sterling."
+    },
+    {
+      kw: ["kubernetes","docker","container","aks","wcnp","orchestrat"],
+      a: "Yes — she's deployed and auto-scaled applications on Kubernetes (including Azure Kubernetes Service) and WCNP, and containerized legacy on-prem VM workloads with Docker as part of cloud migrations at Walmart and Fidelity. At Walmart, Kubernetes auto-scaling cut FY22 cloud costs by 70%."
+    },
+    {
+      kw: ["database","sql","nosql","mongodb","mongo","cosmos","oracle","mysql","mariadb","graphdb","postgres"],
+      a: "She's worked across relational and NoSQL databases: Azure SQL, Oracle, MySQL, MariaDB, MongoDB, Cosmos DB, and GraphDB — including designing a custom rules engine on GraphDB at Walmart."
+    },
+    {
+      kw: ["testing","test","junit","mockito","tdd","jmeter","qa","quality","unit test","automat"],
+      a: "She practices test-driven development, using JUnit and Mockito for backend testing, Jest/Jasmine/Karma for JavaScript, and JMeter for performance and automated testing."
+    },
+    {
+      kw: ["kafka","messaging","event-driven","event driven","service bus","queue"],
+      a: "She builds event-driven systems using Azure Service Bus and Apache Kafka — including a proof-of-concept Learning Integration System at Walmart combining Kafka, Azure Functions, and a Learning Record Store."
+    },
+    {
+      kw: ["graphql"],
+      a: "Yes — she's both consumed and built GraphQL APIs for microservices, at Walmart."
+    },
+    {
+      kw: ["react native","mobile","hybrid app","cordova","play store","android","ios app"],
+      a: "She's built and shipped hybrid mobile apps using React Native and Apache Cordova to the Google Play Store and enterprise devices, at Walmart."
+    },
+    {
+      kw: ["devops","ci/cd","cicd","jenkins","git","maven","sonar","pipeline","nexus","build engineering"],
+      a: "Her CI/CD toolchain spans Git, Maven, Jenkins, Docker, and Sonar for code quality — she's built and maintained delivery pipelines end-to-end at every company she's worked for."
+    },
+    {
+      kw: ["observability","monitoring","datadog","splunk","grafana","dynatrace","alert","sla"],
+      a: "She instruments production systems with Datadog, Splunk, Grafana, and Dynatrace — including setting up custom alerting against SLA thresholds and building performance dashboards at Walmart and Fidelity."
+    },
+    {
+      kw: ["why hire","strength","stand out","different","unique","differentiat"],
+      a: "Twelve-plus years of genuine full-stack range — backend, frontend, cloud, and data — paired with recent technical leadership as Module Lead: mentoring engineers and owning architecture decisions across a portfolio of production applications."
+    },
+    {
+      kw: ["resume","cv","download"],
+      a: "There's no downloadable file linked here yet — the fastest way to get her full resume is to email reachvysh@gmail.com."
+    },
+    {
+      kw: ["early career","first job","before walmart","career start"],
+      a: "Her career started at Tata Consultancy Services (2013–2014), then Avnet Inc. (2016), before six years at Walmart and now Fidelity Investments — ask about TCS or Avnet specifically for details."
+    },
+    {
+      kw: ["hi","hello","hey","yo "],
+      a: "Hi! Ask me anything about Vaishnavi's experience, skills, or background."
+    },
+    {
+      kw: ["thanks","thank you","cheers"],
+      a: "You're welcome — anything else you'd like to know?"
     }
   ];
 
   var FALLBACK = "I don't have a scripted answer for that one — the best move is to ask her directly at reachvysh@gmail.com. Try one of the suggested questions below, or ask about her experience, stack, or education.";
-  var GREETING = "Hi! I can answer quick questions about Vaishnavi's experience, skills, and background — try one of the prompts below or type your own.";
+  var GREETING = "Hi! I can answer quick questions about Vaishnavi's experience, skills, and background — try one of the prompts below, or ask how many years she has with a specific technology like Java, React, Azure, or AEM.";
+
+  // ---- dynamic years-of-experience engine, computed from actual role dates ----
+  function monthsBetween(startStr, endStr){
+    var start = new Date(startStr);
+    var end = endStr ? new Date(endStr) : new Date();
+    return (end.getFullYear()-start.getFullYear())*12 + (end.getMonth()-start.getMonth());
+  }
+  function yearsFor(periods){
+    var m = 0;
+    periods.forEach(function(p){ m += monthsBetween(p[0], p[1]); });
+    return m/12;
+  }
+  function fmt(y){
+    var r = Math.round(y*2)/2;
+    return (r % 1 === 0 ? r.toFixed(0) : r.toFixed(1));
+  }
+
+  var TCS=['2013-03-01','2014-08-31'], AVNET=['2016-02-01','2016-12-31'],
+      WMT=['2017-01-01','2023-03-01'], FID=['2023-03-01', null];
+
+  var TECH = {
+    java: function(){ return "Java — about " + fmt(yearsFor([TCS,AVNET,WMT,FID])) + "+ years, used continuously from her first role at TCS through today at Fidelity."; },
+    spring: function(){ return "Spring (MVC, Boot, Batch) — about " + fmt(yearsFor([TCS,AVNET,WMT,FID])) + "+ years, spanning every role she's held."; },
+    react: function(){ return "React/ReactJS — about " + fmt(yearsFor([WMT])) + " years, at Walmart (2017–2023). Not used in her current Fidelity role."; },
+    reactnative: function(){ return "React Native — about " + fmt(yearsFor([WMT])) + " years, at Walmart, building hybrid mobile apps."; },
+    angular: function(){ return "Angular — about " + fmt(yearsFor([FID])) + "+ years currently at Fidelity (2023–present). She also used AngularJS earlier at Avnet in 2016 (about " + fmt(yearsFor([AVNET])) + " year)."; },
+    typescript: function(){ return "TypeScript — about " + fmt(yearsFor([FID])) + "+ years, at Fidelity (2023–present)."; },
+    azure: function(){ return "Azure — about " + fmt(yearsFor([WMT,FID])) + "+ years, continuously since 2017 across Walmart and Fidelity."; },
+    kubernetes: function(){ return "Kubernetes — about " + fmt(yearsFor([WMT,FID])) + "+ years, continuously since 2017 (WCNP at Walmart, AKS at Fidelity)."; },
+    docker: function(){ return "Docker — about " + fmt(yearsFor([WMT,FID])) + "+ years, since 2017 across Walmart and Fidelity."; },
+    nodejs: function(){ return "Node.js — about " + fmt(yearsFor([WMT])) + " years, at Walmart."; },
+    graphql: function(){ return "GraphQL — about " + fmt(yearsFor([WMT])) + " years, at Walmart."; },
+    kafka: function(){ return "Kafka — about " + fmt(yearsFor([WMT])) + " years, at Walmart."; },
+    aem: function(){ return "Adobe AEM — roughly " + fmt(yearsFor([WMT])) + " years, primarily during her time at Walmart."; },
+    oracle: function(){ return "Oracle — about " + fmt(yearsFor([TCS,AVNET])) + " years, earlier in her career at TCS and Avnet."; }
+  };
+
+  var TECH_PATTERNS = [
+    {re:/react native/, key:'reactnative'},
+    {re:/react(?!\s*native)(js)?/, key:'react'},
+    {re:/angular(js)?/, key:'angular'},
+    {re:/typescript/, key:'typescript'},
+    {re:/kubernetes|k8s/, key:'kubernetes'},
+    {re:/docker/, key:'docker'},
+    {re:/azure/, key:'azure'},
+    {re:/node\.?js|\bnode\b/, key:'nodejs'},
+    {re:/graphql/, key:'graphql'},
+    {re:/kafka/, key:'kafka'},
+    {re:/\baem\b|adobe (experience manager|aem)/, key:'aem'},
+    {re:/oracle/, key:'oracle'},
+    {re:/spring/, key:'spring'},
+    {re:/\bjava\b/, key:'java'}
+  ];
+  var YEARS_CUE = /year|how long|experience|worked with|know\s/;
+
+  function techExperienceAnswer(text){
+    var matched = [];
+    TECH_PATTERNS.forEach(function(p){
+      if(p.re.test(text) && matched.indexOf(p.key) === -1) matched.push(p.key);
+    });
+    if(matched.length === 0) return null;
+    // only take over if the question is actually asking about duration/experience,
+    // OR more than one technology was named (comparison-style question)
+    if(!YEARS_CUE.test(text) && matched.length < 2) return null;
+    return matched.map(function(k){ return TECH[k](); }).join(' ');
+  }
+
 
   function bestAnswer(q){
     var text = q.toLowerCase();
+    var techAnswer = techExperienceAnswer(text);
+    if(techAnswer) return techAnswer;
     var best = null, bestScore = 0;
     KB.forEach(function(entry){
       var score = 0;
